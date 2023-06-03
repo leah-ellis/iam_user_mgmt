@@ -1,0 +1,15 @@
+{
+  "names": [
+    "John",
+    "Leah"
+  ],
+  "names2": [
+    "Luke",
+    "Brenda"
+  ],
+  "names3": [
+    "Abraham",
+    "Sydney"
+  ],
+  "action": "delete"
+}
