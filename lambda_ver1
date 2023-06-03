@@ -1,0 +1,78 @@
+import json
+import boto3    
+
+iam_client = boto3.client('iam')
+
+def lambda_handler(
+    event, context
+):  
+    # creating local variables from the event
+    names = event['names']
+    names2 = event['names2']
+    names3 = event['names3']
+    action = event['action']
+    
+    # evaluating what action to take 
+    print("The test event has been prompted to " + action)
+    if action == "create":
+        for n in names:
+            create_user(n)
+            print("User, " + n + " has now been added to IAM Mgmt")
+        # loop through creating users
+    elif action == "delete":
+        for n in names2: 
+            delete_user(n)
+            print("User, " + n + " has now been deleted from IAM Mgmt")
+        # loop through deleting users
+    else:
+        print('Line 30 - No Action Taken')
+     
+    
+def create_user(
+    user_name
+):
+    print("The new user name is " + user_name)
+    create_response = iam_client.create_user(UserName = user_name)
+    """Fetches user names from list entitled names, names2, and names3.
+
+    Adds new users to the IAM User Management console. 
+
+    Args:
+        user_name: name entered as string.
+
+    Returns:
+        A new user is represented as a concatenated string response. 
+        For example:
+
+        User, Paul has now been added to IAM Mgmt
+
+    Raises:
+        An error occurrs for duplicate names.
+        For example:
+        
+        EntityAlreadyExistsException
+    """
+
+def delete_user(
+    user_name
+):
+    delete_response = iam_client.delete_user(UserName = user_name)
+    """Fetches user names from list names, names2, and names3.
+
+    Deletes users from the IAM User Management console. 
+
+    Args:
+        user_name: name entered as string.
+
+    Returns:
+        A new user is represented as a concatenated string response. 
+        For example:
+
+        User, Paul has now been added to IAM Mgmt
+
+    Raises:
+        An error occurrs for duplicate names.
+        For example:
+        
+        EntityAlreadyExistsException
+    """
